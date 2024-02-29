@@ -1,0 +1,118 @@
+/**
+* Target function and, unit test cases that call test helper repeatedly
+* <p>
+* Run in command prompt:
+* cd c:\j
+* c:
+* javac c:\j\IcyHot.java
+* java IcyHot
+*/
+public class SameThatThis {
+
+    //count of test cases
+    private int count;
+    // test cases which has an error. Either due to bad expected data or wrong or incomplete implemnetation of target function
+    private int errs;
+
+    public static void main(String[] args) {
+
+        SameThatThis app = new SameThatThis();
+        app.sameThatThisTestCases();
+
+    }
+
+/**    Given two strings, base and remove, return a version of the base string where all instances of the remove string have been removed (not case sensitive). You may assume that the remove string is length 1 or more.
+*     Remove only non-overlapping instances, so with "xxx" removing "xx" leaves "x".
+*  
+        testCases (think of edge test cases besides the 3 I have given) ->
+        test Helper functions, then implement above target function all same class , as in IcyHot
+        Unit test with tests and test helper in same class. Follow same pattern and order.
+
+    //First add test cases, then test helper and last try to solve the target function
+    //Copy this to a new Class with appropriate name.
+    //Can copy parts of IcyHot to new class or type everything.
+
+*/
+
+
+   public Boolean sameThatThis(String base) {
+        //"That That This"
+        int thisCnt=0; 
+        int thatCnt = 0;
+        int baseSize = base.length();
+        
+        for(int i = 0 ; i < baseSize  ; ){
+            if(base.charAt(i)  == 'T' || base.charAt(i)  == 't'){
+                if(  i + 1 < baseSize && (base.charAt(i + 1)  == 'H' || base.charAt(i + 1)  == 'h' )) {
+                //String is TH
+                    if ( i + 2 < baseSize && ( (base.charAt(i + 2)  == 'I' || base.charAt(i + 2)  == 'i') )
+                            && ( i + 3 < baseSize && (base.charAt(i + 3) == 'S' || base.charAt(i + 3)  == 's' ) )){
+                        thisCnt++;
+                        i = i + 3;
+                    }
+                else if( (i+2< baseSize && (base.charAt(i + 2)  == 'A' || base.charAt(i + 2)  == 'a' ) )
+                    && ( ( i+3 < baseSize && base.charAt(i + 3)  == 'T' || base.charAt(i + 3)  == 't' ) ) ){
+                        thatCnt++;
+                        i = i + 3;
+                    }else{
+                        i = i + 2;
+                    }
+            }else{
+                i++;
+            }
+        }else{
+            i++;
+        }
+        
+    }
+    return thisCnt != 0 && thatCnt != 0 && thisCnt == thatCnt;
+}
+
+
+    /**
+     * Test helper. This function calls target and checks response - if matches expected.
+     * <p>
+     * Same parameters as target plus the return type - expected value.
+     * expected value has to be accurately calculated by developer.
+     * Type and number of parameters can change depending on your question.
+     */
+    void testSameThatThis(String temp1, Boolean expected) {
+        Boolean actual = false;
+        count++;
+        try {
+            actual = sameThatThis(temp1);
+        } catch (Throwable e) {
+            e.printStackTrace();// log it
+            System.err.println("Error " + e);
+        }
+
+        if (expected != actual) {
+            System.out.println("Actual :" + actual + ", expected :" + expected + ", for temp1 :" + temp1 + ", count :" + count + ".");
+            errs++;
+        }
+    }
+
+    /**
+     * Different test cases - more the better to adequately test the target function for all
+     * requirements per the question.
+     * Number of test cases depends on question and number & type of parameters in target.
+     */
+    private void sameThatThisTestCases() {
+        System.out.println("SameThatThis test cases run at " + new java.util.Date() );
+        testSameThatThis("That That This", false); 
+        testSameThatThis("This is not That", true); 
+        testSameThatThis("thisnoisthatxxnotbthatyynotxisi that this forthis", true); 
+        testSameThatThis("How are you?", false);
+        testSameThatThis("That is not ", false);
+        testSameThatThis("This is not ", false);
+        testSameThatThis("thisis his not ", false);
+        testSameThatThis("is not hath", false);
+        
+        //sameThatThis("That That This") -> false
+        //sameThatThis("This is not That") -> true
+        //sameThatThis("thisnoisthatxxnotbthatyynotxisi that this forthis") -> true
+        
+        System.out.println("Same That This test cases count " + count + ", Errors :" + errs + ".");
+    }
+
+}
